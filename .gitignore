@@ -1,0 +1,6 @@
+/main.go
+.env
+vendor
+.idea/
+.DS_Store
+.vscode

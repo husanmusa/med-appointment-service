@@ -1,0 +1,3 @@
+[submodule "mh_protos"]
+	path = mh_protos
+	url = git@github.com:husanmusa/mh_protos.git

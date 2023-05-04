@@ -1,0 +1,28 @@
+syntax="proto3";
+
+package appointment_service;
+option go_package="genproto/appointment_service";
+
+import "google/protobuf/empty.proto";
+
+service AppointmentService {
+  rpc Create(Appointment) returns (Appointment) {}
+  rpc Get(AppointmentId) returns (Appointment) {}
+  rpc Cancel(AppointmentId) returns (google.protobuf.Empty) {}
+}
+
+message Appointment {
+  string id = 1;
+  int32 appoint_id = 2;
+  string doctor_id = 3;
+  string patient_id = 4;
+  string appoint_date = 5;
+  string appoint_time = 6;
+  int32 status = 7;
+  string created_at = 8;
+  string updated_at = 9;
+}
+
+message AppointmentId {
+  string id = 1;
+}
