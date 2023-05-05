@@ -18,6 +18,8 @@ type Store struct {
 	db           *pgxpool.Pool
 	log          logger.LoggerI
 	appointmentI storage.AppointmentServiceI
+	doctorI      storage.DoctorI
+	patientI     storage.PatientI
 }
 
 func (s *Store) CloseDB() {
@@ -83,4 +85,20 @@ func (s *Store) Appointment() storage.AppointmentServiceI {
 	}
 
 	return s.appointmentI
+}
+
+func (s *Store) Doctor() storage.DoctorI {
+	if s.doctorI == nil {
+		s.doctorI = NewDoctorRepo(s.db)
+	}
+
+	return s.doctorI
+}
+
+func (s *Store) Patient() storage.PatientI {
+	if s.patientI == nil {
+		s.patientI = NewPatientRepo(s.db)
+	}
+
+	return s.patientI
 }

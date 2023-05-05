@@ -1,8 +1,9 @@
-package postgres
+package test
 
 import (
 	"context"
 	pb "github.com/husanmusa/med-appointment-service/genproto/appointment_service"
+	"github.com/husanmusa/med-appointment-service/storage/postgres"
 	"reflect"
 	"testing"
 )
@@ -41,8 +42,8 @@ func Test_appointmentRepo_Create(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			a := appointmentRepo{
-				db: db,
+			a := postgres.AppointmentRepo{
+				Db: db,
 			}
 			got, err := a.Create(tt.args.ctx, tt.args.in)
 			if (err != nil) != tt.wantErr {
@@ -88,8 +89,8 @@ func Test_appointmentRepo_Get(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			a := appointmentRepo{
-				db: db,
+			a := postgres.AppointmentRepo{
+				Db: db,
 			}
 			got, err := a.Get(tt.args.ctx, tt.args.in)
 			if (err != nil) != tt.wantErr {
@@ -125,8 +126,8 @@ func Test_appointmentRepo_Cancel(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			a := appointmentRepo{
-				db: db,
+			a := postgres.AppointmentRepo{
+				Db: db,
 			}
 			if err := a.Cancel(tt.args.ctx, tt.args.in); (err != nil) != tt.wantErr {
 				t.Errorf("Cancel() error = %v, wantErr %v", err, tt.wantErr)

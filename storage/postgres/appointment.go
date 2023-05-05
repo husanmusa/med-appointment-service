@@ -9,18 +9,18 @@ import (
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
-type appointmentRepo struct {
-	db *pgxpool.Pool
+type AppointmentRepo struct {
+	Db *pgxpool.Pool
 }
 
 func NewAppointmentRepo(db *pgxpool.Pool) storage.AppointmentServiceI {
-	return &appointmentRepo{
-		db: db,
+	return &AppointmentRepo{
+		Db: db,
 	}
 }
 
-func (a appointmentRepo) Create(ctx context.Context, in *pb.Appointment) (*pb.Appointment, error) {
-	err := a.db.QueryRow(ctx, `insert into appointment (
+func (a AppointmentRepo) Create(ctx context.Context, in *pb.Appointment) (*pb.Appointment, error) {
+	err := a.Db.QueryRow(ctx, `insert into appointment (
                 id,
                 appoint_id,
                 doctor_id,
@@ -47,11 +47,11 @@ func (a appointmentRepo) Create(ctx context.Context, in *pb.Appointment) (*pb.Ap
 	return in, nil
 }
 
-func (a appointmentRepo) Get(ctx context.Context, in *pb.AppointmentId) (*pb.Appointment, error) {
+func (a AppointmentRepo) Get(ctx context.Context, in *pb.AppointmentId) (*pb.Appointment, error) {
 	var (
 		appointment pb.Appointment
 	)
-	err := a.db.QueryRow(ctx, `
+	err := a.Db.QueryRow(ctx, `
 						select 
     						appoint_id,
     						doctor_id,
@@ -79,8 +79,8 @@ func (a appointmentRepo) Get(ctx context.Context, in *pb.AppointmentId) (*pb.App
 	return &appointment, nil
 }
 
-func (a appointmentRepo) Cancel(ctx context.Context, in *pb.AppointmentId) error {
-	_, err := a.db.Exec(ctx, `update appointment set status = 0 where id = $1`, in.Id)
+func (a AppointmentRepo) Cancel(ctx context.Context, in *pb.AppointmentId) error {
+	_, err := a.Db.Exec(ctx, `update appointment set status = 0 where id = $1`, in.Id)
 	if err != nil {
 		return err
 	}

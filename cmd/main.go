@@ -57,9 +57,13 @@ func main() {
 	defer pgStore.CloseDB()
 
 	documentService := service.NewAppointmentService(log, pgStore)
+	doctor := service.NewDoctorService(log, pgStore)
+	patient := service.NewPatientService(log, pgStore)
 	reflection.Register(s)
 
 	pb.RegisterAppointmentServiceServer(s, documentService)
+	pb.RegisterDoctorServiceServer(s, doctor)
+	pb.RegisterPatientServiceServer(s, patient)
 
 	group, ctx := errgroup.WithContext(context.Background())
 	fmt.Println(ctx)
