@@ -49,6 +49,9 @@ Then:
 ## Run
 You can run the project in docker if you want, or locally if you want.
 Dockerfile and docker-compose are already written. You just need to install some environments :).
+```bash
+    go run cmd/main.go
+```
 
 ## Structure
 The reason for the structure of the program is that, first of all, 90% of projects in Uzbekistan have a similar structure. That's why I also chose this structure.
